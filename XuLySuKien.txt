@@ -1,0 +1,259 @@
+===============================================================
+MainActivity.java
+===============================================================
+package com.example.tuongdung.calculator;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.BaseInputConnection;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+
+public class MainActivity extends AppCompatActivity {
+
+    private Button btnNumber1;
+    private Button btnNumber2;
+    private Button btnNumber3;
+    private Button btnNumber4;
+    private Button btnNumber5;
+    private Button btnNumber6;
+    private Button btnNumber7;
+    private Button btnNumber8;
+    private Button btnNumber9;
+    private Button btnNumber0;
+
+    private Button btnCong;
+    private Button btnTru;
+    private Button btnNhan;
+    private Button btnChia;
+    private Button btnResult;
+
+    private Button btnClear;
+    private Button btnClearAll;
+    private Button btnPoint;
+
+    private TextView InputText;
+    private TextView Result;
+
+    private final char ADDTION = '+';
+    private final char SUBTRACTION = '-';
+    private final char MULTIPLICATION = '*';
+    private final char DIVISION = '/';
+    private final char EQU = '0';
+
+    private double val1 = Double.NaN;
+    private double val2;
+    private char ACTION;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        setupUIViews();
+
+        btnNumber0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputText.setText(InputText.getText().toString() + "0");
+            }
+        });
+
+        btnNumber1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputText.setText(InputText.getText().toString() + "1");
+            }
+        });
+
+        btnNumber2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputText.setText(InputText.getText().toString() + "2");
+            }
+        });
+
+        btnNumber3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputText.setText(InputText.getText().toString() + "3");
+            }
+        });
+
+        btnNumber4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputText.setText(InputText.getText().toString() + "4");
+            }
+        });
+
+        btnNumber5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputText.setText(InputText.getText().toString() + "5");
+            }
+        });
+
+        btnNumber6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputText.setText(InputText.getText().toString() + "6");
+            }
+        });
+
+        btnNumber7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputText.setText(InputText.getText().toString() + "7");
+            }
+        });
+
+        btnNumber8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputText.setText(InputText.getText().toString() + "8");
+            }
+        });
+
+        btnNumber9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputText.setText(InputText.getText().toString() + "9");
+            }
+        });
+
+        btnPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputText.setText(InputText.getText().toString() + ".");
+            }
+        });
+        btnCong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compute();
+                ACTION = ADDTION;
+                Result.setText(String.valueOf(val1));
+                InputText.setText(null);
+            }
+        });
+        btnTru.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compute();
+                ACTION = SUBTRACTION;
+                Result.setText(String.valueOf(val1));
+                InputText.setText(null);
+            }
+        });
+        btnNhan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compute();
+                ACTION = MULTIPLICATION;
+                Result.setText(String.valueOf(val1));
+                InputText.setText(null);
+            }
+        });
+        btnChia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compute();
+                ACTION = DIVISION;
+                Result.setText(String.valueOf(val1));
+                InputText.setText(null);
+            }
+        });
+        btnResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compute();
+                ACTION = EQU;
+                Result.setText(String.valueOf(val1));
+                InputText.setText(null);
+            }
+        });
+
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (InputText.getText().length() > 0){
+                    CharSequence name = InputText.getText().toString();
+                    InputText.setText(name.subSequence(0, name.length()-1));
+                }
+                else {
+                    val1 = Double.NaN;
+                    val2 = Double.NaN;
+                    InputText.setText(null);
+                    Result.setText(null);
+                }
+            }
+        });
+        btnClearAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                val1 = Double.NaN;
+                val2 = Double.NaN;
+                InputText.setText(null);
+                Result.setText(null);
+            }
+        });
+
+    }
+
+    private void setupUIViews() {
+
+        btnNumber0 = (Button) findViewById(R.id.btnNumber0);
+        btnNumber1 = (Button) findViewById(R.id.btnNumber1);
+        btnNumber2 = (Button) findViewById(R.id.btnNumber2);
+        btnNumber3 = (Button) findViewById(R.id.btnNumber3);
+        btnNumber4 = (Button) findViewById(R.id.btnNumber4);
+        btnNumber5 = (Button) findViewById(R.id.btnNumber5);
+        btnNumber6 = (Button) findViewById(R.id.btnNumber6);
+        btnNumber7 = (Button) findViewById(R.id.btnNumber7);
+        btnNumber8 = (Button) findViewById(R.id.btnNumber8);
+        btnNumber9 = (Button) findViewById(R.id.btnNumber9);
+        btnResult = (Button) findViewById(R.id.btnResult);
+
+        btnCong = (Button) findViewById(R.id.btnCong);
+        btnTru = (Button) findViewById(R.id.btnTru);
+        btnNhan = (Button) findViewById(R.id.btnNhan);
+        btnChia = (Button) findViewById(R.id.btnChia);
+
+        btnClear = (Button) findViewById(R.id.btnClear);
+        btnClearAll = (Button) findViewById(R.id.btnClearAll);
+        btnPoint = (Button) findViewById(R.id.btnPoint);
+
+        InputText = (TextView) findViewById(R.id.edt_input);
+        Result = (TextView) findViewById(R.id.tv_result);
+    }
+    private void compute(){
+        if (!Double.isNaN(val1)){
+            val2 = Double.parseDouble(InputText.getText().toString());
+            switch (ACTION){
+                case ADDTION:
+                    val1 = val1 + val2;
+                    break;
+                case SUBTRACTION:
+                    val1 = val1 - val2;
+                    break;
+                case MULTIPLICATION:
+                    val1 = val1 * val2;
+                    break;
+                case DIVISION:
+                    val1 = val1 / val2;
+                    break;
+                case EQU:
+                    break;
+            }
+        }
+        else {
+            val1 = Double.parseDouble(InputText.getText().toString());
+        }
+    }
+}
